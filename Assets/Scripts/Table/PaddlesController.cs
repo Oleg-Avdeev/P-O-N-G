@@ -54,7 +54,7 @@ namespace Pong.Game
             var point = bottom ? _bottom : _top;
             var paddle = Instantiate(_paddlePrefab, point.position, Quaternion.identity, _bottom.parent);
             paddle.SetController(controller);
-            return p;
+            return paddle;
         }
     }
 }
