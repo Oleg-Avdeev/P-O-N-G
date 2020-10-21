@@ -26,7 +26,6 @@ namespace Pong.Game
         {
             Debug.LogWarning($"Starting game {gameType}");
             _networkController.SetPaddleCreationFunction(_paddlesController.CreateRemotePaddle);
-            // _paddlesController.InitializePaddles(GameType.Remote);
             _gameSettings.Initialize();
 
             _bestScore = Data.DataManager.Instance.GetBestScore();
@@ -36,6 +35,7 @@ namespace Pong.Game
 
             if (gameType != GameType.Remote)
             {
+                _paddlesController.CreateLocalPaddles(gameType);
                 _ball.OnStartServer();
                 StartRound();
             }

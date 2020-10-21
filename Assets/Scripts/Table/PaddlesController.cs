@@ -38,14 +38,14 @@ namespace Pong.Game
                 var bcontroller = _paddleControllerFactory.GetController(PaddleType.Player, true);
                 var tcontroller = _paddleControllerFactory.GetController(PaddleType.Player, false);
                 _bottomPaddle = CreatePaddle(bcontroller, true);
-                _topPaddle = CreatePaddle(tcontroller, true);
+                _topPaddle = CreatePaddle(tcontroller, false);
             }
             else if (gameType == GameType.PvE)
             {
                 var bcontroller = _paddleControllerFactory.GetController(PaddleType.Player, true);
                 var tcontroller = _paddleControllerFactory.GetController(PaddleType.AI, false);
                 _bottomPaddle = CreatePaddle(bcontroller, true);
-                _topPaddle = CreatePaddle(tcontroller, true);
+                _topPaddle = CreatePaddle(tcontroller, false);
             }
         }
 
