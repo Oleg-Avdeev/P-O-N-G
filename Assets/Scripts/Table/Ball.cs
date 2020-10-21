@@ -34,7 +34,6 @@ namespace Pong.Game
             float x = Random.Range(-1f,1f);
 
             _velocity = new Vector2(x, y).normalized * parameters.Speed;
-            Debug.LogError(_velocity);
             
             _speedUpFactor = parameters.SpeedUpFactor;
         }

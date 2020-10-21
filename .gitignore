@@ -6,7 +6,7 @@
 /Assets/AssetStoreTools*
 /[Xx][cC]ode/
 /Saves/
-/Toska-Logs/
+/build.app/
 
 # Visual Studio 2015 cache directory
 /.vs/

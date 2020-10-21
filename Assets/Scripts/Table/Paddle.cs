@@ -1,9 +1,10 @@
 using Pong.Game.PaddleControllers;
 using UnityEngine;
+using Mirror;
 
 namespace Pong.Game
 {
-    public sealed class Paddle : MonoBehaviour
+    public sealed class Paddle : NetworkBehaviour
     {
         [SerializeField] private Rigidbody2D _rigidBody = default;
 
@@ -22,7 +23,10 @@ namespace Pong.Game
 
         private void Update()
         {
-            _nextPosition = _controller.GetPosition();
+            if (_controller != null)
+            {
+                _nextPosition = _controller.GetPosition();
+            }
         }
     }
 }

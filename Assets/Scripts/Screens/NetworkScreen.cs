@@ -13,25 +13,25 @@ namespace Pong.Screens
         public override void Open(Action onDone)
         {
             base.Open(onDone);
-            _networkController.OnConnected += HandleConnection;
             _networkController.OnDisconnected += HandleDisconnection;
         }
 
         public void Host()
         {
+            OpenGame();
             _networkController.StartHost();
         }
 
         public void Connect()
         {
+            OpenGame();
             _networkController.StartClient();
         }
 
         public override void Close()
         {
-            base.Close();
-            _networkController.OnConnected -= HandleConnection;
             _networkController.OnDisconnected -= HandleDisconnection;
+            base.Close();
         }
 
         private void OpenGame()

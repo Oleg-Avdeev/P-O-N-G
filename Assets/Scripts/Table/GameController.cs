@@ -8,15 +8,14 @@ namespace Pong.Game
 
     public sealed class GameController : MonoBehaviour
     {
+        [SerializeField] private NetworkController _networkController = default;
         [SerializeField] private GameSettings _gameSettings = default;
         [SerializeField] private CountIn _countInUI = default;
         [SerializeField] private Score _scoreUI = default;
 
         [SerializeField] private Ball _ball = default;
+        [SerializeField] private PaddlesController _paddlesController = default;
 
-        [SerializeField] private PaddleControllerFactory _paddleControllerFactory = default;
-        [SerializeField] private Paddle _paddle1 = default;
-        [SerializeField] private Paddle _paddle2 = default;
 
         private int _scoreBottom = 0;
         private int _scoreTop = 0;
@@ -25,32 +24,23 @@ namespace Pong.Game
 
         public void StartGame(GameType gameType)
         {
+            Debug.LogWarning($"Starting game {gameType}");
+            _networkController.SetPaddleCreationFunction(_paddlesController.CreateRemotePaddle);
+            
             _gameSettings.Initialize();
-            InitializePaddles(gameType);
+            _paddlesController.InitializePaddles(gameType);
 
             _bestScore = Data.DataManager.Instance.GetBestScore();
             _scoreUI.SetBestScore(_bestScore.top, _bestScore.bottom);
             _scoreUI.SetScore(0, 0);
 
-            StartRound();
-        }
+            if (gameType == GameType.Remote)
+            {
 
-        private void InitializePaddles(GameType gameType)
-        {
-            if (gameType == GameType.Local)
-            {
-                _paddle1.SetController(_paddleControllerFactory.GetController(PaddleType.Player, true));
-                _paddle2.SetController(_paddleControllerFactory.GetController(PaddleType.Player, false));
             }
-            else if (gameType == GameType.PvE)
+            else
             {
-                _paddle1.SetController(_paddleControllerFactory.GetController(PaddleType.Player, true));
-                _paddle2.SetController(_paddleControllerFactory.GetController(PaddleType.Player, false));
-            }
-            else if (gameType == GameType.Remote)
-            {
-                _paddle1.SetController(_paddleControllerFactory.GetController(PaddleType.Player, true));
-                _paddle2.SetController(_paddleControllerFactory.GetController(PaddleType.AI, false));
+                StartRound();
             }
         }
 
