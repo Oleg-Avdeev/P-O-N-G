@@ -22,7 +22,10 @@ namespace Pong.Game
 
         private void Update()
         {
-            _nextPosition = _controller.GetPosition();
+            if (_controller != null)
+            {
+                _nextPosition = _controller.GetPosition();
+            }
         }
     }
 }

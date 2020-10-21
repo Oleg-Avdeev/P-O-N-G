@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Pong.Game.PaddleControllers
 {
-    public sealed class PlayerController : IPaddleController
+    public class PlayerController : IPaddleController
     {
         private bool _isBottomPlayer;
         private Camera _projectionCamera;

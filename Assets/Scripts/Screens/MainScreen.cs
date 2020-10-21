@@ -7,6 +7,7 @@ namespace Pong.Screens
     {
         [SerializeField] private Screen _settingsSceen = default;
         [SerializeField] private Screen _gameScreen = default;
+        [SerializeField] private Screen _networkScreen = default;
 
         public void OpenSettings()
         {
@@ -18,6 +19,12 @@ namespace Pong.Screens
         {
             Hide();
             _gameScreen.Open(onDone: Open);
+        }
+
+        public void OpenNetworkScreen()
+        {
+            Hide();
+            _networkScreen.Open(onDone: Open);
         }
 
         public void Open()

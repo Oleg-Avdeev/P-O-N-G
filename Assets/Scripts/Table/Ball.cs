@@ -19,6 +19,7 @@ namespace Pong.Game
 
         private float _speedUpFactor = 1f;
         private Vector2 _velocity;
+        private Tween _animationTween;
 
         public void Appear(Parameters parameters)
         {
@@ -26,14 +27,13 @@ namespace Pong.Game
 
             _transform.localScale = Vector3.zero;
             _transform.localPosition = Vector3.zero;
-            _transform.DOScale(parameters.Size, _appearDuration).SetEase(Ease.InOutExpo);
+            _animationTween = _transform.DOScale(parameters.Size, _appearDuration).SetEase(Ease.InOutExpo);
             
             //Make sure that the ball always has Vy component
             float y = Random.Range(0f,1f) > 0.5f ? 1f : -1f;
             float x = Random.Range(-1f,1f);
 
             _velocity = new Vector2(x, y).normalized * parameters.Speed;
-            Debug.LogError(_velocity);
             
             _speedUpFactor = parameters.SpeedUpFactor;
         }
@@ -51,11 +51,12 @@ namespace Pong.Game
             _rigidBody.isKinematic = true;
             _rigidBody.simulated = false;
             _collider.enabled = false;
+            _animationTween.Kill(false);
         }
 
         public void Disappear(Action onComplete = null)
         {
-            _transform.DOScale(0, _appearDuration).SetEase(Ease.InOutExpo).OnComplete(() => {
+            _animationTween = _transform.DOScale(0, _appearDuration).SetEase(Ease.InOutExpo).OnComplete(() => {
                 onComplete?.Invoke();
             });
         }

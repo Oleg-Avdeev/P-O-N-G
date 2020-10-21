@@ -8,14 +8,22 @@ namespace Pong.Screens
     public sealed class GameScreen : Screen
     {
         [SerializeField] private GameController _gameController = default;
-        [SerializeField] private Material _ballMaterial = default;
 
         public override void Open(Action onDone)
         {
-            var color = Data.DataManager.Instance.GetBallColor();
-            _ballMaterial.SetColor("_Color", color);
-            
-            _gameController.StartGame();
+            _gameController.StartGame(GameType.PvE);
+            base.Open(onDone);
+        }
+
+        public void OpenLocal(Action onDone)
+        {
+            _gameController.StartGame(GameType.Local);
+            base.Open(onDone);
+        }
+
+        public void OpenRemote(Action onDone)
+        {
+            _gameController.StartGame(GameType.Remote);
             base.Open(onDone);
         }
 
