@@ -4,18 +4,17 @@ using UnityEngine;
 
 namespace Pong.Game
 {
+    public enum GameType { PvE, Local, Remote }
+
     public sealed class GameController : MonoBehaviour
     {
-        [SerializeField] private Camera _gameCamera = default;
+        [SerializeField] private GameSettings _gameSettings = default;
         [SerializeField] private CountIn _countInUI = default;
         [SerializeField] private Score _scoreUI = default;
 
         [SerializeField] private Ball _ball = default;
-        [SerializeField] private float _minBallSize = default;
-        [SerializeField] private float _maxBallSize = default;
-        [SerializeField] private float _minBallSpeed = default;
-        [SerializeField] private float _maxBallSpeed = default;
 
+        [SerializeField] private PaddleControllerFactory _paddleControllerFactory = default;
         [SerializeField] private Paddle _paddle1 = default;
         [SerializeField] private Paddle _paddle2 = default;
 
@@ -24,18 +23,35 @@ namespace Pong.Game
         private bool _running = false;
         private (int top, int bottom) _bestScore;
 
-        public void StartGame()
+        public void StartGame(GameType gameType)
         {
-            _paddle1.SetController(new PlayerController(isBottomPlayer: true, camera: _gameCamera));
-            _paddle2.SetController(new PlayerController(isBottomPlayer: false, camera: _gameCamera));
-            // _paddle2.SetController(new AIController(_ball));
-            
+            _gameSettings.Initialize();
+            InitializePaddles(gameType);
+
             _bestScore = Data.DataManager.Instance.GetBestScore();
             _scoreUI.SetBestScore(_bestScore.top, _bestScore.bottom);
             _scoreUI.SetScore(0, 0);
 
-
             StartRound();
+        }
+
+        private void InitializePaddles(GameType gameType)
+        {
+            if (gameType == GameType.Local)
+            {
+                _paddle1.SetController(_paddleControllerFactory.GetController(PaddleType.Player, true));
+                _paddle2.SetController(_paddleControllerFactory.GetController(PaddleType.Player, false));
+            }
+            else if (gameType == GameType.PvE)
+            {
+                _paddle1.SetController(_paddleControllerFactory.GetController(PaddleType.Player, true));
+                _paddle2.SetController(_paddleControllerFactory.GetController(PaddleType.Player, false));
+            }
+            else if (gameType == GameType.Remote)
+            {
+                _paddle1.SetController(_paddleControllerFactory.GetController(PaddleType.Player, true));
+                _paddle2.SetController(_paddleControllerFactory.GetController(PaddleType.AI, false));
+            }
         }
 
         public void QuitGame()
@@ -47,13 +63,7 @@ namespace Pong.Game
 
         public void StartRound()
         {
-            var p = new Ball.Parameters() {
-                Size = Random.Range(_minBallSize, _maxBallSize),
-                Speed = Random.Range(_minBallSpeed, _maxBallSpeed),
-                SpeedUpFactor = 1.1f
-            };
-
-            _ball.Appear(p);
+            _ball.Appear(_gameSettings.GetRandomBallParameters());
 
             _countInUI.Show(seconds: 3, onComplete: () => {
                 _running = true;

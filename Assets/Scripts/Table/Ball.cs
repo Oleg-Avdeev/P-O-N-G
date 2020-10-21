@@ -2,10 +2,11 @@ using Random = UnityEngine.Random;
 using UnityEngine;
 using DG.Tweening;
 using System;
+using Mirror;
 
 namespace Pong.Game
 {
-    public sealed class Ball : MonoBehaviour
+    public sealed class Ball : NetworkBehaviour
     {
         public struct Parameters { public float Size; public float Speed; public float SpeedUpFactor; }
 
@@ -68,16 +69,12 @@ namespace Pong.Game
             }
         }
 
+        [ServerCallback]
         private void OnCollisionEnter2D(Collision2D col)
         {
             if (col.contactCount > 0)
             {
-                if (col.collider.name == "Borders")
-                {
-                    var normal = col.contacts[0].normal;
-                    _rigidBody.velocity = Vector2.Reflect(_velocity, normal);
-                }
-                else
+                if (col.collider.name == "Paddle")
                 {
                     var m = _velocity.magnitude;
                     var shiftX = (_rigidBody.position.x - col.rigidbody.position.x);
