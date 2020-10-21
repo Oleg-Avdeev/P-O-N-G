@@ -8,8 +8,12 @@ namespace Pong.Game
 
         [SerializeField] private float _minBallSize = default;
         [SerializeField] private float _maxBallSize = default;
+
         [SerializeField] private float _minBallSpeed = default;
         [SerializeField] private float _maxBallSpeed = default;
+
+        [SerializeField] private float _minSpeedFactor = default;
+        [SerializeField] private float _maxSpeedFactor = default;
 
         public void Initialize()
         {
@@ -22,7 +26,7 @@ namespace Pong.Game
             return new Ball.Parameters() {
                 Size = Random.Range(_minBallSize, _maxBallSize),
                 Speed = Random.Range(_minBallSpeed, _maxBallSpeed),
-                SpeedUpFactor = 1.1f
+                SpeedUpFactor = Random.Range(_minSpeedFactor, _maxSpeedFactor),
             };
         }
     }

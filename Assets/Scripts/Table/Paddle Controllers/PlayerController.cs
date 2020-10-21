@@ -19,7 +19,7 @@ namespace Pong.Game.PaddleControllers
             Vector2 average = Vector2.zero;
             int count = 0;
 
-            #if UNITY_ANDROID || UNITY_IOS
+            #if !UNITY_EDITOR && (UNITY_ANDROID || UNITY_IOS)
                 var touches = Input.touches;
                 foreach (var touch in touches)
                 {

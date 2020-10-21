@@ -81,8 +81,13 @@ namespace Pong.Game
                 else
                 {
                     var m = _velocity.magnitude;
-                    var shiftX = (_rigidBody.position.x - col.rigidbody.position.x);
-                    var direction = new Vector2(shiftX, col.contacts[0].normal.y);
+                    var x = (_rigidBody.position.x - col.rigidbody.position.x);
+                    var y = col.contacts[0].normal.y;
+                    
+                    if (Mathf.Abs(y) < 1) y = Mathf.Sign(y) * 1;
+                    if (y == 0) y = Random.Range(-2, 2);
+
+                    var direction = new Vector2(x, y);
                     _rigidBody.velocity = m * direction.normalized;
 
                     if (_rigidBody.velocity.magnitude < _maxSpeed)
