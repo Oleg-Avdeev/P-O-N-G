@@ -2,7 +2,7 @@ using UnityEngine;
 using System;
 using Mirror;
 
-namespace Pong.Game
+namespace Pong.Game.Network
 {
     public sealed class NetworkController : NetworkManager
     {

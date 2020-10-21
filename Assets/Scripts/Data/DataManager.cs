@@ -5,7 +5,6 @@ namespace Pong.Data
     public sealed class DataManager : IDataManager
     {
         private const string _hsvKey = "hsv{0}";
-        private const string _colorKey = "color{0}";
         private const string _scoreKey = "score{0}";
 
         private static IDataManager _instance;

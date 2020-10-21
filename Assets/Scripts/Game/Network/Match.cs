@@ -1,7 +1,7 @@
 using UnityEngine;
 using Mirror;
 
-namespace Pong.Game
+namespace Pong.Game.Network
 {
     public sealed class Match : NetworkBehaviour
     {

@@ -1,4 +1,5 @@
 using Pong.Game.PaddleControllers;
+using Pong.Game.Network;
 using Pong.Game.UI;
 using UnityEngine;
 
