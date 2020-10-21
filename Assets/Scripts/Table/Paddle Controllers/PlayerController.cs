@@ -14,6 +14,8 @@ namespace Pong.Game.PaddleControllers
             _projectionCamera = camera;
         }
 
+        bool IPaddleController.CanPlay(bool isLocalUser) => true;
+
         float IPaddleController.GetPosition()
         {
             Vector2 average = Vector2.zero;

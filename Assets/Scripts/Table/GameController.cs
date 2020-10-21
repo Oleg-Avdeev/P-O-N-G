@@ -16,7 +16,6 @@ namespace Pong.Game
         [SerializeField] private Ball _ball = default;
         [SerializeField] private PaddlesController _paddlesController = default;
 
-
         private int _scoreBottom = 0;
         private int _scoreTop = 0;
         private bool _running = false;
@@ -33,10 +32,12 @@ namespace Pong.Game
 
             _bestScore = Data.DataManager.Instance.GetBestScore();
             _scoreUI.SetBestScore(_bestScore.top, _bestScore.bottom);
+            _scoreBottom = _scoreTop = 0;
             _scoreUI.SetScore(0, 0);
 
             if (gameType != GameType.Remote)
             {
+                _ball.OnStartServer();
                 StartRound();
             }
             else
@@ -49,6 +50,7 @@ namespace Pong.Game
         {
             _ball.Deactivate();
             _ball.Disappear();
+            _countInUI.Stop();
             _running = false;
         }
 

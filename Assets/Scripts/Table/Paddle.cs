@@ -14,11 +14,16 @@ namespace Pong.Game
         public void SetController(IPaddleController controller)
         {
             _controller = controller;
+            
+            if (_controller != null)
+            {
+                gameObject.SetActive(true);
+            }
         }
 
         private void FixedUpdate()
         {
-            if (_controller != null && isLocalPlayer)
+            if (_controller != null && _controller.CanPlay(isLocalPlayer))
             {
                 _rigidBody.MovePosition(new Vector2(_nextPosition, _rigidBody.position.y));
             }
@@ -26,7 +31,7 @@ namespace Pong.Game
 
         private void Update()
         {
-            if (_controller != null && isLocalPlayer)
+            if (_controller != null && _controller.CanPlay(isLocalPlayer))
             {
                 _nextPosition = _controller.GetPosition();
             }

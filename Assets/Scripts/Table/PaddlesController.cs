@@ -6,8 +6,8 @@ namespace Pong.Game
     public sealed class PaddlesController : MonoBehaviour
     {
         [SerializeField] private PaddleControllerFactory _paddleControllerFactory = default;
-        [SerializeField] private Paddle _bottomPaddle;
-        [SerializeField] private Paddle _topPaddle;
+        [SerializeField] private Paddle _bottomPaddle = default;
+        [SerializeField] private Paddle _topPaddle = default;
 
         public GameObject CreateRemotePaddle(bool bottom)
         {
@@ -28,8 +28,8 @@ namespace Pong.Game
             }
             else if (gameType == GameType.Remote)
             {
-                _bottomPaddle.SetController(_paddleControllerFactory.GetController(PaddleType.Player, true));
-                _topPaddle.SetController(_paddleControllerFactory.GetController(PaddleType.Player, false));
+                _bottomPaddle.SetController(_paddleControllerFactory.GetController(PaddleType.Remote, true));
+                _topPaddle.SetController(_paddleControllerFactory.GetController(PaddleType.Remote, false));
             }
         }
     }

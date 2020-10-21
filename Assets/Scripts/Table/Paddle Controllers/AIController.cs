@@ -11,6 +11,8 @@ namespace Pong.Game.PaddleControllers
             _ball = ball;
         }
 
+        bool IPaddleController.CanPlay(bool isLocalUser) => true;
+
         float IPaddleController.GetPosition()
         {
             return _ball.GetPosition.x;
