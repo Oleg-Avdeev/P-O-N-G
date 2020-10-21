@@ -27,8 +27,7 @@ namespace Pong.Screens
 
         public override void Open(Action onDone)
         {
-            var color = Data.DataManager.Instance.GetBallColor();
-            var hsb = ColorUtility.RGBtoHSV(color.r, color.g, color.b);
+            var hsb = Data.DataManager.Instance.GetBallHSB();
 
             _h = hsb.x; _colorSlider.value = _h;
             _s = hsb.y; _saturationSlider.value = _s;
@@ -40,7 +39,7 @@ namespace Pong.Screens
 
         public override void Close()
         {
-            Data.DataManager.Instance.SetBallColor(_color);
+            Data.DataManager.Instance.SetBallHSB(_h, _s, _b);
             base.Close();
         }
 

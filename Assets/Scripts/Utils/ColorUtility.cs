@@ -6,10 +6,10 @@ public static class ColorUtility
     public static Color HSVtoRGB(float h, float s, float v)
     {
         h = h % 1.0f;
-        float r = Mathf.Lerp(1, Mathf.Abs(h * 6 - 3) - 1, s);
-        float g = Mathf.Lerp(1, 2 - Mathf.Abs(h * 6 - 2), s);
-        float b = Mathf.Lerp(1, 2 - Mathf.Abs(h * 6 - 4), s);
-        Color rgb = new Color(r*v,g*v,b*v,1);
+        float r = Mathf.Lerp(1, Mathf.Min(1, Mathf.Abs(h * 6 - 3) - 1), s);
+        float g = Mathf.Lerp(1, Mathf.Min(1, 2 - Mathf.Abs(h * 6 - 2)), s);
+        float b = Mathf.Lerp(1, Mathf.Min(1, 2 - Mathf.Abs(h * 6 - 4)), s);
+        Color rgb = new Color(r*v, g*v, b*v, 1);
         return rgb;
     }
 

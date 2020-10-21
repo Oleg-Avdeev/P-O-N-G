@@ -32,7 +32,8 @@ namespace Pong.Game
             float y = Random.Range(0f,1f) > 0.5f ? 1f : -1f;
             float x = Random.Range(-1f,1f);
 
-            _rigidBody.velocity = new Vector2(x, y).normalized * parameters.Speed;
+            _velocity = new Vector2(x, y).normalized * parameters.Speed;
+            Debug.LogError(_velocity);
             
             _speedUpFactor = parameters.SpeedUpFactor;
         }
@@ -42,6 +43,7 @@ namespace Pong.Game
             _rigidBody.isKinematic = false;
             _rigidBody.simulated = true;
             _collider.enabled = true;
+            _rigidBody.velocity = _velocity;
         }
 
         public void Deactivate()
@@ -60,7 +62,10 @@ namespace Pong.Game
 
         private void FixedUpdate()
         {
-            _velocity = _rigidBody.velocity;
+            if (_rigidBody.simulated)
+            {
+                _velocity = _rigidBody.velocity;
+            }
         }
 
         private void OnCollisionEnter2D(Collision2D col)

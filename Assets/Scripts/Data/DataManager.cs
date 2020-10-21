@@ -4,6 +4,7 @@ namespace Pong.Data
 {
     public sealed class DataManager : IDataManager
     {
+        private const string _hsvKey = "hsv{0}";
         private const string _colorKey = "color{0}";
         private const string _scoreKey = "score{0}";
 
@@ -20,17 +21,23 @@ namespace Pong.Data
 
         Color IDataManager.GetBallColor()
         {
-            var r = PlayerPrefs.GetFloat(string.Format(_colorKey, 0), 1f);
-            var g = PlayerPrefs.GetFloat(string.Format(_colorKey, 1), 1f);
-            var b = PlayerPrefs.GetFloat(string.Format(_colorKey, 2), 1f);
-            return new Color(r,g,b,1);
+            var hsb = _instance.GetBallHSB();
+            return ColorUtility.HSVtoRGB(hsb.x, hsb.y, hsb.z);
         }
 
-        void IDataManager.SetBallColor(Color color)
+        Vector3 IDataManager.GetBallHSB()
         {
-            PlayerPrefs.SetFloat(string.Format(_colorKey, 0), color.r);
-            PlayerPrefs.SetFloat(string.Format(_colorKey, 1), color.g);
-            PlayerPrefs.SetFloat(string.Format(_colorKey, 2), color.b);
+            var h = PlayerPrefs.GetFloat(string.Format(_hsvKey, 0), 1f);
+            var s = PlayerPrefs.GetFloat(string.Format(_hsvKey, 1), 1f);
+            var b = PlayerPrefs.GetFloat(string.Format(_hsvKey, 2), 1f);
+            return new Vector3(h, s, b);
+        }
+
+        void IDataManager.SetBallHSB(float h, float s, float b)
+        {
+            PlayerPrefs.SetFloat(string.Format(_hsvKey, 0), h);
+            PlayerPrefs.SetFloat(string.Format(_hsvKey, 1), s);
+            PlayerPrefs.SetFloat(string.Format(_hsvKey, 2), b);
         }
 
         (int score1, int score2) IDataManager.GetBestScore()
