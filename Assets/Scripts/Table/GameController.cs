@@ -27,23 +27,22 @@ namespace Pong.Game
         public void StartGame()
         {
             _paddle1.SetController(new PlayerController(isBottomPlayer: true, camera: _gameCamera));
-            _paddle2.SetController(new AIController(_ball));
+            _paddle2.SetController(new PlayerController(isBottomPlayer: false, camera: _gameCamera));
+            // _paddle2.SetController(new AIController(_ball));
             
             _bestScore = Data.DataManager.Instance.GetBestScore();
             _scoreUI.SetBestScore(_bestScore.top, _bestScore.bottom);
             _scoreUI.SetScore(0, 0);
 
-            // _paddle2.SetController(new PlayerController(isBottomPlayer: false, camera: _gameCamera));
 
             StartRound();
         }
 
         public void QuitGame()
         {
-            if (_scoreBottom + _scoreTop > _bestScore.bottom + _bestScore.top)
-            {
-                Data.DataManager.Instance.SetBestScore(_scoreBottom, _scoreTop);
-            }
+            _ball.Deactivate();
+            _ball.Disappear();
+            _running = false;
         }
 
         public void StartRound()
@@ -72,14 +71,22 @@ namespace Pong.Game
                 {
                     _running = false;
                     _ball.Deactivate();
-
-                    if (y > 0) _scoreBottom++;
-                    else _scoreTop++;
-
-                    _scoreUI.SetScore(_scoreTop, _scoreBottom);
-
                     _ball.Disappear(StartRound);
+                    Score(y > 0);
                 }
+            }
+        }
+
+        private void Score(bool bottom)
+        {
+
+            if (bottom) _scoreBottom++;
+            else _scoreTop++;
+
+            _scoreUI.SetScore(_scoreTop, _scoreBottom);
+            if (_scoreBottom + _scoreTop > _bestScore.bottom + _bestScore.top)
+            {
+                Data.DataManager.Instance.SetBestScore(_scoreBottom, _scoreTop);
             }
         }
     }

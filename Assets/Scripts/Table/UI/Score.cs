@@ -7,7 +7,7 @@ namespace Pong.Game.UI
 {
     public sealed class Score : MonoBehaviour
     {
-        private const string _bestScoreTemplate = "Best — {0}:{1}";
+        private const string _bestScoreTemplate = "Best {0}:{1}";
 
         [SerializeField] private Text _topScoreText = default;
         [SerializeField] private Text _bottomScoreText = default;
