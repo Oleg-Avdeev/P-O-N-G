@@ -11,13 +11,13 @@ namespace Pong.Screens
 
         public override void Open(Action onDone)
         {
-            _gameController.StartGame(GameType.PvE);
+            _gameController.StartGame(GameType.Local);
             base.Open(onDone);
         }
 
-        public void OpenLocal(Action onDone)
+        public void OpenPvE(Action onDone)
         {
-            _gameController.StartGame(GameType.Local);
+            _gameController.StartGame(GameType.PvE);
             base.Open(onDone);
         }
 

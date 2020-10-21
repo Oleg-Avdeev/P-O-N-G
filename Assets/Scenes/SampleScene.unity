@@ -1556,6 +1556,7 @@ GameObject:
   - component: {fileID: 692842880}
   - component: {fileID: 692842883}
   - component: {fileID: 692842882}
+  - component: {fileID: 692842884}
   m_Layer: 8
   m_Name: Borders
   m_TagString: Untagged
@@ -1671,6 +1672,21 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 692842878}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &692842884
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 692842878}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b44e05aa2cb15439da6c12a420890e8c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _rigidBody: {fileID: 692842880}
+  _gameCamera: {fileID: 519420031}
+  _offset: 0.8
 --- !u!1 &706445714
 GameObject:
   m_ObjectHideFlags: 0
@@ -4370,6 +4386,7 @@ GameObject:
   - component: {fileID: 2119141531}
   - component: {fileID: 2119141534}
   - component: {fileID: 2119141533}
+  - component: {fileID: 2119141535}
   m_Layer: 8
   m_Name: Borders
   m_TagString: Untagged
@@ -4485,6 +4502,21 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!114 &2119141535
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2119141529}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b44e05aa2cb15439da6c12a420890e8c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _rigidBody: {fileID: 2119141531}
+  _gameCamera: {fileID: 519420031}
+  _offset: 0.8
 --- !u!1 &2123608875
 GameObject:
   m_ObjectHideFlags: 0
