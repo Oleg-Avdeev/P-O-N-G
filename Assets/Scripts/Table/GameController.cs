@@ -20,6 +20,7 @@ namespace Pong.Game
         private int _scoreBottom = 0;
         private int _scoreTop = 0;
         private bool _running = false;
+        private bool _waiting = false;
         private (int top, int bottom) _bestScore;
 
         public void StartGame(GameType gameType)
@@ -34,13 +35,13 @@ namespace Pong.Game
             _scoreUI.SetBestScore(_bestScore.top, _bestScore.bottom);
             _scoreUI.SetScore(0, 0);
 
-            if (gameType == GameType.Remote)
+            if (gameType != GameType.Remote)
             {
-
+                StartRound();
             }
             else
             {
-                StartRound();
+                _waiting = true;
             }
         }
 
@@ -75,11 +76,19 @@ namespace Pong.Game
                     Score(y > 0);
                 }
             }
+
+            if (_waiting)
+            {
+                if (Match.Instance != null)
+                {
+                    _waiting = false;
+                    StartRound();
+                }
+            }
         }
 
         private void Score(bool bottom)
         {
-
             if (bottom) _scoreBottom++;
             else _scoreTop++;
 

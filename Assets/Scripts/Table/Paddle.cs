@@ -18,12 +18,15 @@ namespace Pong.Game
 
         private void FixedUpdate()
         {
-            _rigidBody.MovePosition(new Vector2(_nextPosition, _rigidBody.position.y));
+            if (_controller != null && isLocalPlayer)
+            {
+                _rigidBody.MovePosition(new Vector2(_nextPosition, _rigidBody.position.y));
+            }
         }
 
         private void Update()
         {
-            if (_controller != null)
+            if (_controller != null && isLocalPlayer)
             {
                 _nextPosition = _controller.GetPosition();
             }

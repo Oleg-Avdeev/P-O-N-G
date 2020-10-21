@@ -19,7 +19,14 @@ namespace Pong.Game
         [SerializeField] private float _maxSpeed = 8f;
 
         private float _speedUpFactor = 1f;
+        private bool _simulating = false;
         private Vector2 _velocity;
+
+        public override void OnStartServer()
+        {
+            base.OnStartServer();
+            _simulating = true;
+        }
 
         public void Appear(Parameters parameters)
         {
@@ -40,17 +47,23 @@ namespace Pong.Game
 
         public void Activate()
         {
-            _rigidBody.isKinematic = false;
-            _rigidBody.simulated = true;
-            _collider.enabled = true;
+            if (_simulating)
+            {
+                _rigidBody.isKinematic = false;
+                _rigidBody.simulated = true;
+                _collider.enabled = true;
+            }
             _rigidBody.velocity = _velocity;
         }
 
         public void Deactivate()
         {
-            _rigidBody.isKinematic = true;
-            _rigidBody.simulated = false;
-            _collider.enabled = false;
+            if (_simulating)
+            {
+                _rigidBody.isKinematic = true;
+                _rigidBody.simulated = false;
+                _collider.enabled = false;
+            }
         }
 
         public void Disappear(Action onComplete = null)

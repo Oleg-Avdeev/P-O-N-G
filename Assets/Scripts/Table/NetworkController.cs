@@ -9,6 +9,8 @@ namespace Pong.Game
         public event Action OnConnected;
         public event Action OnDisconnected;
 
+        [SerializeField] private GameObject _matchPrefab;
+
         private Func<bool, GameObject> GetPaddle;
 
         public void SetPaddleCreationFunction(Func<bool, GameObject> getFunction)
@@ -25,13 +27,13 @@ namespace Pong.Game
 
             if (numPlayers == 2)
             {
-                OnConnected?.Invoke();
+                var match = Instantiate(_matchPrefab);
+                NetworkServer.Spawn(match.gameObject);
             }
         }
 
         public override void OnServerDisconnect(NetworkConnection conn)
         {
-            // call base functionality (actually destroys the player)
             base.OnServerDisconnect(conn);
         }
     }

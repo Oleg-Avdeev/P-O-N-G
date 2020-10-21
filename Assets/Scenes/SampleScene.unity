@@ -1150,6 +1150,8 @@ GameObject:
   - component: {fileID: 389471351}
   - component: {fileID: 389471356}
   - component: {fileID: 389471357}
+  - component: {fileID: 389471359}
+  - component: {fileID: 389471358}
   m_Layer: 10
   m_Name: Sphere
   m_TagString: Untagged
@@ -1380,6 +1382,40 @@ TrailRenderer:
   m_MinVertexDistance: 0.1
   m_Autodestruct: 0
   m_Emitting: 1
+--- !u!114 &389471358
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 389471350}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f74aedd71d9a4f55b3ce499326d45fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  clientAuthority: 0
+  localPositionSensitivity: 0.01
+  localRotationSensitivity: 0.01
+  localScaleSensitivity: 0.01
+--- !u!114 &389471359
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 389471350}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneId: 1422990434
+  serverOnly: 0
+  m_AssetId: 
+  hasSpawned: 0
 --- !u!1 &389721626
 GameObject:
   m_ObjectHideFlags: 0
@@ -4252,7 +4288,10 @@ MonoBehaviour:
     type: 3}
   autoCreatePlayer: 1
   playerSpawnMethod: 1
-  spawnPrefabs: []
+  spawnPrefabs:
+  - {fileID: 4892396299539966047, guid: 79884c3c10cab4c5b8b994cc95da3a90, type: 3}
+  _matchPrefab: {fileID: 4892396299539966047, guid: 79884c3c10cab4c5b8b994cc95da3a90,
+    type: 3}
 --- !u!1 &1935454459
 GameObject:
   m_ObjectHideFlags: 0
