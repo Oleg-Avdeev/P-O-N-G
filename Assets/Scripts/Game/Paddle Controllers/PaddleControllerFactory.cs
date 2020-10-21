@@ -20,7 +20,6 @@ namespace Pong.Game.PaddleControllers
             {
                 case PaddleType.AI : return new AIController(_ball);
                 case PaddleType.Player : return new PlayerController(isBottom, _gameCamera);
-                case PaddleType.Remote : return new RemoteController(isBottom, _gameCamera);
             }
             return null;
         }

@@ -70,6 +70,7 @@ namespace Pong.Game
             _animationTween.Kill(false);
         }
 
+        [Server]
         public void Disappear(Action onComplete = null)
         {
             _animationTween = _transform.DOScale(0, _appearDuration).SetEase(Ease.InOutExpo).OnComplete(() => {

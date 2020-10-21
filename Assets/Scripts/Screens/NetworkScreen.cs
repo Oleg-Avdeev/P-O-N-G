@@ -14,6 +14,7 @@ namespace Pong.Screens
         public override void Open(Action onDone)
         {
             base.Open(onDone);
+            _networkController.Initialize();
             _networkController.OnDisconnected += HandleDisconnection;
         }
 
@@ -32,8 +33,7 @@ namespace Pong.Screens
         public override void Close()
         {
             _networkController.OnDisconnected -= HandleDisconnection;
-            _networkController.StopClient();
-            _networkController.StopServer();
+            _networkController.Reset();
             base.Close();
         }
 

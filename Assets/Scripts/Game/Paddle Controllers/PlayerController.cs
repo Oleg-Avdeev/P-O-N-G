@@ -14,7 +14,7 @@ namespace Pong.Game.PaddleControllers
             _projectionCamera = camera;
         }
 
-        bool IPaddleController.CanPlay(bool isLocalUser) => true;
+        bool IPaddleController.CanPlay() => true;
 
         float IPaddleController.GetPosition()
         {

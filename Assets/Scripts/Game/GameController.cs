@@ -9,40 +9,38 @@ namespace Pong.Game
 
     public sealed class GameController : MonoBehaviour
     {
-        [SerializeField] private NetworkController _networkController = default;
+        [SerializeField] private PaddlesController _paddlesController = default;
         [SerializeField] private GameSettings _gameSettings = default;
         [SerializeField] private CountIn _countInUI = default;
         [SerializeField] private Score _scoreUI = default;
-
         [SerializeField] private Ball _ball = default;
-        [SerializeField] private PaddlesController _paddlesController = default;
 
-        private int _scoreBottom = 0;
-        private int _scoreTop = 0;
         private bool _running = false;
         private bool _waiting = false;
+        private bool _remote = false;
         private (int top, int bottom) _bestScore;
 
         public void StartGame(GameType gameType)
         {
             Debug.LogWarning($"Starting game {gameType}");
-            _networkController.SetPaddleCreationFunction(_paddlesController.CreateRemotePaddle);
             _gameSettings.Initialize();
 
             _bestScore = Data.DataManager.Instance.GetBestScore();
             _scoreUI.SetBestScore(_bestScore.top, _bestScore.bottom);
-            _scoreBottom = _scoreTop = 0;
             _scoreUI.SetScore(0, 0);
 
             if (gameType != GameType.Remote)
             {
                 _paddlesController.CreateLocalPaddles(gameType);
                 _ball.OnStartServer();
+                _remote = false;
                 StartRound();
             }
             else
             {
+                _paddlesController.InitializeRemoteControllers();
                 _waiting = true;
+                _remote = true;
             }
         }
 
@@ -57,6 +55,7 @@ namespace Pong.Game
 
         public void StartRound()
         {
+            Match.Instance.OnScoreChanged += HandleScoreChange;
             _ball.Appear(_gameSettings.GetRandomBallParameters());
 
             _countInUI.Show(seconds: 3, onComplete: () => {
@@ -92,13 +91,21 @@ namespace Pong.Game
 
         private void Score(bool bottom)
         {
-            if (bottom) _scoreBottom++;
-            else _scoreTop++;
-
-            _scoreUI.SetScore(_scoreTop, _scoreBottom);
-            if (_scoreBottom + _scoreTop > _bestScore.bottom + _bestScore.top)
+            var match = Match.Instance;
+            
+            if (!_remote || Mirror.NetworkServer.active)
             {
-                Data.DataManager.Instance.SetBestScore(_scoreBottom, _scoreTop);
+                if (bottom) match.ScoreBottom++;
+                else match.ScoreTop++;
+            }
+        }
+
+        private void HandleScoreChange(int bottom, int top)
+        {
+            _scoreUI.SetScore(top, bottom);
+            if (bottom + top > _bestScore.bottom + _bestScore.top)
+            {
+                Data.DataManager.Instance.SetBestScore(bottom, top);
             }
         }
     }
