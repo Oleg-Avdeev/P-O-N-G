@@ -17,8 +17,8 @@ namespace Pong.Game
 
         private bool _running = false;
         private bool _waiting = false;
-        private bool _remote = false;
         private (int top, int bottom) _bestScore;
+        private Match _match;
 
         public void StartGame(GameType gameType)
         {
@@ -32,20 +32,26 @@ namespace Pong.Game
             if (gameType != GameType.Remote)
             {
                 _paddlesController.CreateLocalPaddles(gameType);
+                _match = gameObject.AddComponent<Match>();
+                _match.SetAsLocal();
                 _ball.OnStartServer();
-                _remote = false;
-                StartRound();
+                _waiting = true;
             }
             else
             {
                 _paddlesController.InitializeRemoteControllers();
                 _waiting = true;
-                _remote = true;
             }
         }
 
         public void QuitGame()
         {
+            if (_match != null)
+            {
+                Destroy(_match);
+                _match = null;
+            }
+                
             _paddlesController.Reset();
             _ball.Deactivate();
             _ball.Disappear();
@@ -75,7 +81,7 @@ namespace Pong.Game
                     _running = false;
                     _ball.Deactivate();
                     _ball.Disappear(StartRound);
-                    Score(y > 0);
+                    Match.Instance.Score(y > 0);
                 }
             }
 
@@ -86,17 +92,6 @@ namespace Pong.Game
                     _waiting = false;
                     StartRound();
                 }
-            }
-        }
-
-        private void Score(bool bottom)
-        {
-            var match = Match.Instance;
-            
-            if (!_remote || Mirror.NetworkServer.active)
-            {
-                if (bottom) match.ScoreBottom++;
-                else match.ScoreTop++;
             }
         }
 
