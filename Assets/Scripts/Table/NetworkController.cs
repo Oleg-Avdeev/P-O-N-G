@@ -6,7 +6,6 @@ namespace Pong.Game
 {
     public sealed class NetworkController : NetworkManager
     {
-        public event Action OnConnected;
         public event Action OnDisconnected;
 
         [SerializeField] private GameObject _matchPrefab;
@@ -20,7 +19,7 @@ namespace Pong.Game
 
         public override void OnServerAddPlayer(NetworkConnection conn)
         {
-            Debug.Log("Player connected!");
+            Debug.LogError("Player connected!");
 
             GameObject player = GetPaddle(numPlayers == 0);
             NetworkServer.AddPlayerForConnection(conn, player);

@@ -31,6 +31,8 @@ namespace Pong.Screens
         public override void Close()
         {
             _networkController.OnDisconnected -= HandleDisconnection;
+            _networkController.StopClient();
+            _networkController.StopServer();
             base.Close();
         }
 
@@ -38,11 +40,6 @@ namespace Pong.Screens
         {
             gameObject.SetActive(false);
             _gameScreen.OpenRemote(onDone: Close);
-        }
-
-        private void HandleConnection()
-        {
-            OpenGame();
         }
 
         private void HandleDisconnection()

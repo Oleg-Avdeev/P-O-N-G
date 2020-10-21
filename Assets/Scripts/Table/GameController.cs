@@ -26,9 +26,8 @@ namespace Pong.Game
         {
             Debug.LogWarning($"Starting game {gameType}");
             _networkController.SetPaddleCreationFunction(_paddlesController.CreateRemotePaddle);
-            
+            // _paddlesController.InitializePaddles(GameType.Remote);
             _gameSettings.Initialize();
-            _paddlesController.InitializePaddles(gameType);
 
             _bestScore = Data.DataManager.Instance.GetBestScore();
             _scoreUI.SetBestScore(_bestScore.top, _bestScore.bottom);
@@ -48,6 +47,7 @@ namespace Pong.Game
 
         public void QuitGame()
         {
+            _paddlesController.Reset();
             _ball.Deactivate();
             _ball.Disappear();
             _countInUI.Stop();
